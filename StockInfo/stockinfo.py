@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 from flask_ask import Ask, statement, question, session
+from collections import OrderedDict
 import requests
 import unidecode
 import json
@@ -8,10 +9,17 @@ import numpy as np
 app = Flask(__name__)
 ask = Ask(app, '/')
 
+@app.route('/')
+def homepage():
+   return "Hello World!"
+
 @ask.launch
 def start_skill():
+    print("welcome")
     welcome = render_template('stock_open')
+    print("reprompt")
     reprompt = render_template('stock_again')
+    print("Alexa says")
     return question(welcome) \
         .reprompt(reprompt)
 
@@ -23,9 +31,10 @@ def quit_stocks():
     return statement(quit_app)
 
 @ask.intent('GetStockIntent')
-def get_stock():
+def get_stock(stock):
     #Implementing once AJ finishes code
-    return statement("You've reached the stock intent zone.")
+    return statement(stock)
+    #Ask the user for the ticker name if the name doesn't come up
 
 def output(ticker):
     sess = requests.Session()
@@ -51,4 +60,5 @@ def output(ticker):
 
     return "The price of {} is currently {}, and is up {} percent today/".format(ticker, current_price, percent_increase)
 
-
+if __name__=='__main__':
+   app.run(debug=True)
