@@ -24,7 +24,7 @@ def quit_stocks():
 @ask.intent('GetStockIntent')
 def get_stock():
     #Implementing once AJ finishes code
-    pass
+    return statement("You've reached the stock intent zone.")
 
 
 
