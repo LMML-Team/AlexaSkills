@@ -38,16 +38,39 @@ def name_to_ticker(company):
     ticker_dict = pickle.load(open('ticker_dict.pickle', 'rb'))
     return ticker_dict[company]
 
+
 def output(ticker):
+    """
+    Using AlphaVantage, calculates current price of ticker and daily %change
+    
+    Parameters
+    ---------------
+    ticker(string): The chosen stock ticker
+    
+    Returns
+    --------------
+    Returns a string to be read by Alexa reporting the price and change of the ticker
+    """
+
+    # Anthony Cavallaro's AlphaVantage API Key. Used to get stock info in JSON format.
+    apikey = GXTRIS3LY4DDIF3S
+
+    # URL used to get the JSON file
+    url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={}&outputsize=compact&apikey={}'.format(
+        ticker, apikey)
+
+    # Loads information in JSON format from URL as a dictionary
     sess = requests.Session()
-    url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={}&outputsize=compact&apikey=I5BSDPZ1R4M38NWI'.format(
-        ticker)
     html = sess.get(url)
-
     time_series_day = json.loads(html.content.decode('utf-8'))
-    days = time_series_day["Time Series (Daily)"]
-    ordered = OrderedDict(sorted(days.items(), key=lambda t: t[0], reverse=True))
 
+    # Prunes metadata from the time_series_day data
+    time_series_day = time_series_day["Time Series (Daily)"]
+
+    # Constructs a sorted ordered dictionary
+    ordered = OrderedDict(sorted(time_series_day.items(), key=lambda t: t[0], reverse=True))
+
+    # Gets the top two values, stores in a list
     count = 0
     values = []
     for key in ordered:
@@ -56,11 +79,15 @@ def output(ticker):
         if count == 2:
             break
 
+    # Top two values, current price and previous close
     current_price = float(values[0])
     prev_close = float(values[1])
-    percent_increase = np.round(abs(prev_close - current_price) / prev_close * 100, 2)
 
-    return "The price of {} is currently {}, and is up {} percent today".format(ticker, current_price, percent_increase)
+    # Calculates percent change on the day of the stock
+    percent_change = np.round(abs(prev_close - current_price) / prev_close * 100, 2)
+
+    # Report to be read by Alexa
+    return "The price of {} is currently {}, and changed {} percent from yesterday".format(ticker, current_price, percent_change)
 
 if __name__=='__main__':
    app.run(debug=True)
