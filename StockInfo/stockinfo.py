@@ -45,7 +45,6 @@ def output(ticker):
     html = sess.get(url)
 
     time_series_day = json.loads(html.content.decode('utf-8'))
-    print("ticker", ticker)
     days = time_series_day["Time Series (Daily)"]
     ordered = OrderedDict(sorted(days.items(), key=lambda t: t[0], reverse=True))
 
