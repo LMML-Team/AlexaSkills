@@ -2,6 +2,7 @@ from flask import Flask, render_template
 from flask_ask import Ask, statement, question, session
 from collections import OrderedDict
 import requests
+import pickle
 import unidecode
 import json
 import numpy as np
@@ -15,11 +16,8 @@ def homepage():
 
 @ask.launch
 def start_skill():
-    print("welcome")
     welcome = render_template('stock_open')
-    print("reprompt")
     reprompt = render_template('stock_again')
-    print("Alexa says")
     return question(welcome) \
         .reprompt(reprompt)
 
@@ -31,19 +29,24 @@ def quit_stocks():
     return statement(quit_app)
 
 @ask.intent('GetStockIntent')
-def get_stock(stock):
-    #Implementing once AJ finishes code
-    return statement(stock)
-    #Ask the user for the ticker name if the name doesn't come up
+def get_stock(company):
+    print("get ticker")
+    ticker = name_to_ticker(company.lower())
+    return statement(output(ticker))
+
+def name_to_ticker(company):
+    ticker_dict = pickle.load(open('ticker_dict.pickle', 'rb'))
+    return ticker_dict[company]
 
 def output(ticker):
     sess = requests.Session()
-    url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={}&outputsize=compact&apikey=GXTRIS3LY4DDIF3S'.format(
+    url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={}&outputsize=compact&apikey=I5BSDPZ1R4M38NWI'.format(
         ticker)
     html = sess.get(url)
 
     time_series_day = json.loads(html.content.decode('utf-8'))
-    days = time_series_day['Time Series (Daily)']
+    print("ticker", ticker)
+    days = time_series_day["Time Series (Daily)"]
     ordered = OrderedDict(sorted(days.items(), key=lambda t: t[0], reverse=True))
 
     count = 0
@@ -58,7 +61,7 @@ def output(ticker):
     prev_close = float(values[1])
     percent_increase = np.round(abs(prev_close - current_price) / prev_close * 100, 2)
 
-    return "The price of {} is currently {}, and is up {} percent today/".format(ticker, current_price, percent_increase)
+    return "The price of {} is currently {}, and is up {} percent today".format(ticker, current_price, percent_increase)
 
 if __name__=='__main__':
    app.run(debug=True)
