@@ -1,4 +1,4 @@
-stock_open: Hello! What company's stock would you like to review?
-stock_again: What company's stock would you like to review?
+stock_open: What company would you like to know about?
 stock_report: Here is the info I found for {{ company }}.
+stock_another: Would you like to know another company's stock?
 stock_quit: Ok, have a nice day.

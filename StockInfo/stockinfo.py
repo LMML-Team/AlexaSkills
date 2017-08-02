@@ -15,9 +15,10 @@ def homepage():
    return "Hello World!"
 
 @ask.launch
+@ask.intent('AMAZON.YesIntent')
 def start_skill():
     welcome = render_template('stock_open')
-    reprompt = render_template('stock_again')
+    reprompt = render_template('stock_open')
     return question(welcome) \
         .reprompt(reprompt)
 
@@ -30,9 +31,10 @@ def quit_stocks():
 
 @ask.intent('GetStockIntent')
 def get_stock(company):
-    print("get ticker")
+    reprompt = render_template('stock_another')
     ticker = name_to_ticker(company.lower())
-    return statement(output(ticker))
+    return question(output(ticker)) \
+        .reprompt(reprompt)
 
 def name_to_ticker(company):
     ticker_dict = pickle.load(open('ticker_dict.pickle', 'rb'))
