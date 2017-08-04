@@ -12,10 +12,9 @@ def homepage():
 
 @ask.launch
 def start_skill():
-    string = pickle.load( open("wiki_data.p", "rb"))
-    lm_order = 11
-    lm = gt.train_lm(string, lm_order)
-    out = gt.generate_text(lm, lm_order, nletters=100)
+    lm = pickle.load( open("alternative_facts.p", "rb"))
+
+    out = gt.generate_text(lm, 11, nletters=1000)
     return statement(out)
 
 if __name__ == '__main__':
