@@ -28,7 +28,7 @@ def unzip(pairs):
     pairs = [("a", 1), ("b", 2)] --> ["a", "b"] and [1, 2]
         
     """
-    return [zip(*pairs)]
+    return tuple(zip(*pairs))
 
 
 def normalize(counter):
@@ -124,10 +124,10 @@ def generate_letter(lm, history):
         return "~"
 
     # Uses unzip function to split the letters from their probabilities
-    letters, probs = unzip(lm[history])
+    letters_probs = unzip(lm[history])
 
     # Randomly selects and returns a letter from letters with its p in probs
-    i = np.random.choice(letters, p=probs)
+    i = np.random.choice(letters_probs[0], p=letters_probs[1])
     return i
 
 
