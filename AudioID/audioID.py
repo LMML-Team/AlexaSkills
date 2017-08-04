@@ -4,21 +4,14 @@ import numpy as np
 
 #Flask Imports
 from flask import Flask
-from flask_restful import Resource, Api
+from flask_ask import question, statement, Ask
 
 app = Flask(__name__)
 ask = Ask(app, '/')
 
-@app.route("/")
-def homepage():
-    
-    return "Hello"
-
-from app import app
 @app.route('/')
-@app.route('/index')
-def webpage():
-    return '''
+def homepage():
+    return  '''
     <html>
     <head>
 
@@ -30,21 +23,22 @@ def webpage():
     </body>
     </html>
     '''
+
 @ask.launch
 def start_skill():
     """
     """
     return question("Would you like to identify some sick beats?")
 
-@ask.intent("YesIntent")
+@ask.intent("AMAZON.YesIntent")
 def begin_recording():
     """
     """
-    return statement("Please play the song for 10 seconds. Now recording.")
-    msg = record_song()
-    return statment("I think the songs were {}, {}, and {}".format(msg[0], msg[1], msg[2]))
+    #return statement("Please play the song for 10 seconds. Now recording.")
+    msg = ai.record_song()
+    return question("I think the songs were {}, {}, and {}".format(msg[0], msg[1], msg[2]))
 
-@ask.intent("NoIntent")
+@ask.intent("AMAZON.NoIntent")
 def no_intent():
     """
     """
@@ -52,4 +46,4 @@ def no_intent():
 
 
 if __name__=="__main__":
-        app.run(host='0.0.0.0', port=80, debug=True)
+    app.run(debug=True)
