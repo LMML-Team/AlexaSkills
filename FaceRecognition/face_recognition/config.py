@@ -225,3 +225,17 @@ def complementary_color(hsv_img) :
     comp_color_hsv[0][hue_less_eq_180] = hue[hue_less_eq_180] + 180
 
     return comp_color_hsv
+
+
+class Person:
+    def __init__(self, name, descriptors):
+        self.name = name
+        self.descriptors = descriptors
+        self.shopping_list = []
+
+    def __shopping_list__(self):
+        return self.shopping_list
+    def formatted_shopping_list(self):
+        message = "Your shopping list has {}".format(", ".join(self.shopping_list[:-1]))
+        message = message + ", and " + self.shopping_list[-1:]
+        return message
