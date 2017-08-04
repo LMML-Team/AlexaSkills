@@ -17,7 +17,7 @@ def start_skill():
 
 @ask.intent('AMAZON.YesIntent')
 def take_pic():
-    print(fr.add_picture(alexa=True))
+   return question(fr.add_picture(alexa=True))
 
 @ask.intent('AMAZON.CancelIntent')
 @ask.intent('AMAZON.StopIntent')
