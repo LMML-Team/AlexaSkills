@@ -14,7 +14,7 @@ python FaceRecognition\setup.py
 We have provided you ngrok from https://ngrok.com/download.
 Run ngrok.exe.
 
-To run Ngrok, go to the directory of the cloned repository and run the command:
+*To run Ngrok*, go to the directory of the cloned repository and run the command:
 ```shell
 ./ngrok.exe http 5000
 ```
@@ -22,6 +22,7 @@ or
 ```shell
 ./ngrok http 5000
 ```
+
 ### Alexa (Echo)
 
 ## StockInfo
