@@ -3,8 +3,9 @@ import os.path
 
 song_data = tuple()
 
-with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), "song_data.pickle"), 'rb') as f:
-    song_data = pickle.load(f)
+# This is only if you have no songs in your database
+# with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), "song_data.pickle"), 'rb') as f:
+#     song_data = pickle.load(f)
 
 
 def save() :
