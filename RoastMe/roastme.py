@@ -24,6 +24,7 @@ def homepage():
 @ask.launch
 def start_skill():
     """
+    It'll respond with the message after you say the invocation phrase
     """
     msg = "Are you ready to get roasted?"
     return question(msg)
@@ -31,6 +32,7 @@ def start_skill():
 @ask.intent("YesIntent")
 def get_rekt():
     """
+    When you say yes after Alexa asks, it'll respond with a random message from the list.
     """
     roast_msgs = []
 
@@ -45,7 +47,9 @@ def get_rekt():
 @ask.intent("NoIntent")
 def no_intent():
     """
+    When you say no after Alexa asks, it'll respond with the msg
     """
+    msg = "Okay, I see how it is. Goodbye."
     return statement(msg)
 
 if __name__ == '__main__':
