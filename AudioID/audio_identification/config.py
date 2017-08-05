@@ -70,6 +70,8 @@ def match_song(fingerprint) :
     best_match = max(song_data, key=lambda x: len(x[0] & fingerprint))
     num_matches = len(best_match[0] & fingerprint)
 
+    print(num_matches)
+
     if num_matches >= 30:
         str_match = "strong match"
     elif num_matches >= 20:
