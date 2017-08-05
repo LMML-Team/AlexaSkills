@@ -9,10 +9,10 @@ import json
 app = Flask(__name__)
 ask = Ask(app, '/')
 
-goodbyeMsg = []
-goodbyeMsg[0] = "Later Nerds!"
-goodbyeMsg[1] = "Okay, then. I see how it is."
-goodbyeMsg[2] = ""
+# goodbyeMsg = []
+# goodbyeMsg[0] = "Later Nerds!"
+# goodbyeMsg[1] = "Okay, then. I see how it is."
+# goodbyeMsg[2] = ""
 
 @app.route('/')
 def homepage():
@@ -21,15 +21,17 @@ def homepage():
     """
     return "Hello"
 
-@ask.launch
-def start_skill():
-    """
-    It'll respond with the message after you say the invocation phrase
-    """
-    msg = "Are you ready to get roasted?"
-    return question(msg)
+# @ask.launch
+# def start_skill():
+#     """
+#     It'll respond with the message after you say the invocation phrase
+#     """
+#     msg = "Are you ready to get roasted?"
+#     return question(msg)
 
+@ask.launch
 @ask.intent("YesIntent")
+@ask.intent("RoastAgainIntent")
 def get_rekt():
     """
     When you say yes after Alexa asks, it'll respond with a random message from the list.
@@ -41,16 +43,15 @@ def get_rekt():
             roast_msgs.append(line.strip())
     random = round(rand.random() * len(roast_msgs))
     roast_msg = roast_msgs[random]
-    roast_msg += "Now go or I shall taunt you again."
 
-    return statement(roast_msg)
+    return question(roast_msg)
 
 @ask.intent("NoIntent")
 def no_intent():
     """
     When you say no after Alexa asks, it'll respond with the msg
     """
-    msg = "Okay, I see how it is. Goodbye."
+    msg = "Now go or I shall taunt you again."
     return statement(msg)
 
 if __name__ == '__main__':
