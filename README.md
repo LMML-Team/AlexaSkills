@@ -1,5 +1,6 @@
 # Alexa Skills
-This is a student project
+This is a student project for our Cognitive Assistant in Beaver Works 2017.
+By Anthony Cavallaro, Amanda Wang, Michael Lai, and Petar Griggs
 ## Setup
 
 ### Setup.py
@@ -57,6 +58,3 @@ NoIntent nope
 
 **For Configuration**, select HTTPS for the Service Endpoint type and select the continent you are planning to use this in. A textbox will appear, and you need to have ngrok running and copy the HTTPS URL. It should be `https://(random_hash).ngrok.io`
 
-## StockInfo
-
-## Roast Me
