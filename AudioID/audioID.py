@@ -36,12 +36,12 @@ def begin_recording():
     """
     #return statement("Please play the song for 10 seconds. Now recording.")
     msg = ai.record_song(time=7)
-    # if msg[3].lower() == "no match":
-    #     return question("Sorry, I couldn't identify that song.")
-    # else:
-    response = "I found a {} for {} in the album {} by {}. ".format(msg[3], msg[0], msg[1], msg[2])
-    response += "Would you like to identify another song?"
-    return question(response)
+    if msg[3] == "No match":
+        return question("Sorry, I couldn't identify that song. Would you like to identify another song?")
+    else:
+        response = "I found a {} for {} in the album {} by {}. ".format(msg[3], msg[0], msg[1], msg[2])
+        response += "Would you like to identify another song?"
+        return question(response)
 
 @ask.intent("AMAZON.NoIntent")
 @ask.intent("AMAZON.StopIntent")

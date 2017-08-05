@@ -3,9 +3,8 @@ import os.path
 
 song_data = tuple()
 
-# This is only if you have no songs in your database
-# with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), "song_data.pickle"), 'rb') as f:
-#     song_data = pickle.load(f)
+with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), "song_data.pickle"), 'rb') as f:
+    song_data = pickle.load(f)
 
 
 def save() :
@@ -45,6 +44,43 @@ def remove_song(song_name) :
     save()
 
 
+def remove_album(album_name) :
+    '''
+    Removes specified album's songs from database with song_name as key
+
+    Parameters
+    -------------
+    album_name: song_object.key
+        string with album's name
+    '''
+    global song_data
+    song_data = tuple(list(x for x in song_data if x[2] != album_name))
+    save()
+
+
+def remove_artist(artist_name) :
+    '''
+    Removes specified artist's songs from database with song_name as key
+
+    Parameters
+    -------------
+    artist_name: song_object.key
+        string with artist's name
+    '''
+    global song_data
+    song_data = tuple(list(x for x in song_data if x[3] != artist_name))
+    save()
+
+
+def clear_database() :
+    '''
+    Clears database of song fingerprints
+    '''
+    global song_data
+    song_data = ()
+    save()
+
+
 def list_songs() :
     '''
     Returns the list of song names as a np.array
@@ -70,17 +106,16 @@ def match_song(fingerprint) :
     '''
     best_match = max(song_data, key=lambda x: len(x[0] & fingerprint))
     num_matches = len(best_match[0] & fingerprint)
-
     print(num_matches)
 
-    if num_matches >= 30:
-        str_match = "strong match"
-    elif num_matches >= 20:
-        str_match ="good match"
-    elif num_matches >= 10:
-        str_match = "weak match"
+    if num_matches >= 80:
+        str_match = "Strong match"
+    elif num_matches >= 50:
+        str_match ="Good match"
+    elif num_matches >= 25:
+        str_match = "Weak match"
     else:
-        str_match = "no match"
+        str_match = "No match"
 
     # add functionality to check if song is good match (based on number of matches)
     return best_match[1:], str_match
