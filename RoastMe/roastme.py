@@ -12,7 +12,7 @@ ask = Ask(app, '/')
 goodbyeMsg = []
 goodbyeMsg[0] = "Later Nerds!"
 goodbyeMsg[1] = "Okay, then. I see how it is."
-goodbyeMsg[2] = "
+goodbyeMsg[2] = ""
 
 @app.route('/')
 def homepage():
@@ -41,6 +41,7 @@ def get_rekt():
             roast_msgs.append(line.strip())
     random = round(rand.random() * len(roast_msgs))
     roast_msg = roast_msgs[random]
+    roast_msg += "Now go or I shall taunt you again."
 
     return statement(roast_msg)
 

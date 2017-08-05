@@ -156,8 +156,10 @@ def generate_text(lm, n, nletters=100):
     text = []
     history_indices = np.arange(len(lm.keys()))
     index = np.random.choice(history_indices)
-    history = lm[index]
-
+    history = list(lm.keys())
+    history = history[index]
+    print(history)
+    print(type(history))
 
     # uses generate_letter function to generate text that is nletters long
     for i in range(nletters):
