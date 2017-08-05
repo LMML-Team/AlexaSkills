@@ -12,12 +12,11 @@ def homepage():
 
 @ask.launch
 def start_skill():
-    with open("alt_fact_lm.p", "rb") as f:
+    with open("alternative_fact_lm.p", "rb") as f:
         lm = pickle.load(f)
 
-    out = gt.generate_text(lm, 11, nletters=100)
-    print(out)
-    return statement(out)
+    out = gt.generate_text(lm, 11, nletters=1)
+    return statement("bye")
 
 if __name__ == '__main__':
     app.run(debug=True)

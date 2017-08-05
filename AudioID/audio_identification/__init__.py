@@ -28,9 +28,12 @@ def record_song(time=10) :
     samples = np.hstack(tuple(np.fromstring(i, dtype=np.int16) for i in byte_encoded_signal))
 
     fingerprint = song_fp(samples)
-    best_match = match_song(fingerprint)
+    best_match, str_match = match_song(fingerprint)
 
-    return best_match
+    #return "{} by {} from {} is detected as a {}".format(best_match[0], best_match[1], best_match[2], str_match)
+    song_name, album, singer = best_match
+    return song_name, album, singer, str_match
+
 
 
 def import_song_file(song_path, sf=44100) :
@@ -55,9 +58,8 @@ def import_song_file(song_path, sf=44100) :
     song_album = eyed3.load(song_path).tag.album
     song_artist = eyed3.load(song_path).tag.artist
 
-    if (song_name, song_album, song_artist) not in song_data.values() :
+    if (song_name, song_album, song_artist) not in list_songs() :
         samples, sf = librosa.load(song_path, sr=sf)
-
         fingerprint = song_fp(samples)
         new_song(fingerprint, song_name, song_album, song_artist)
 
