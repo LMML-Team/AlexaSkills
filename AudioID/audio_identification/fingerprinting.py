@@ -20,7 +20,8 @@ def song_fp(samples):
 
     fingerprints = set()
     for n, t1 in enumerate(t) :
-        for j, t2 in t[min(n + 1, len(indices[0] - 1) : min(n + 20, len(indices[0]))] :
-            fingerprints.add((f[n], f[n + j + 1], t2 - t1))
+        for j, t2 in enumerate(t[min(n + 1, len(t) - 1) : min(n + 20, len(t))]) :
+            if n + j + 1 < len(t) :
+                fingerprints.add((f[n], f[n + j + 1], t2 - t1))
 
     return frozenset(fingerprints)
