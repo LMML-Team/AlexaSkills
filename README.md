@@ -1,6 +1,6 @@
 # Alexa Skills
 This is a student project for our Cognitive Assistant in Beaver Works 2017.
-By Anthony Cavallaro, Amanda Wang, Michael Lai, and Petar Griggs
+By [Anthony Cavallaro](https://github.com/QuantitativeFinancier), [Amanda Wang](https://github.com/CandyMandy28), [Michael Lai](https://github.com/impostercafe), and [Petar Griggs](https://github.com/Anonymission)
 ## Setup
 
 ### Setup.py
@@ -34,11 +34,11 @@ Create a name and invocation name, click save, and move onto the next part, Inte
 **For Intent Schema**, fill in the parameters that the skill will need.
 ```
 {
-   "intents": 
+   "intents":
    [
    {"intent": "YesIntent"},
    {"intent": "NoIntent"},
-   {"intent":"AMAZON.PauseIntent"}, 
+   {"intent":"AMAZON.PauseIntent"},
    {"intent":"AMAZON.ResumeIntent"}
    ]
 }
@@ -57,4 +57,3 @@ NoIntent nope
 ```
 
 **For Configuration**, select HTTPS for the Service Endpoint type and select the continent you are planning to use this in. A textbox will appear, and you need to have ngrok running and copy the HTTPS URL. It should be `https://(random_hash).ngrok.io`
-
